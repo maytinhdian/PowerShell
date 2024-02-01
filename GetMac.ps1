@@ -5,14 +5,14 @@ function Set-ComputerName {
         [String]$userName
     )
     if ($env:COMPUTERNAME -ne $pcName) {
-        #Rename-Computer -NewName $pcName
+        Rename-Computer -NewName $pcName
     }
     else {
         Write-Host "Current computer name is: $pcName"
     }
     if ($env:USERNAME -ne $userName) {
         #Write-Host $env:USERNAME
-        #Rename-LocalUser -Name $Env:UserName -NewName $userName
+        Rename-LocalUser -Name $Env:UserName -NewName $userName
     }
     else {
         Write-Host "Current user name is: $userName"
@@ -34,9 +34,10 @@ $computer = Invoke-RestMethod -Uri "http://192.168.1.7:8000/api/computer/search"
 #Set tên máy tính và user 
 if (!$computer.mac_address) {
 
-    #Prepare data save to database
+   
     Write-Output "Local mac address: $LocalMacAddress not found - Begining save to database"
 
+    #Prepare data save to database
     $schoolName = Read-Host "Nhap ten truong "
     if ($schoolName.Length -eq 0) {
         # Set default value 
