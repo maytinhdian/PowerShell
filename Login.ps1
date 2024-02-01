@@ -1,12 +1,12 @@
 #Login infomation  
 $Body = @{
     email = 'tnhalk@maytinhdian.com'
-    password     = '123456'
+    password     = Read-Host -Promt 'Nhap password'
 }
 
 # Send a POST request for authentication.
 $Params = @{
-    Uri     = "http://192.168.1.7:8000/api/login"
+    Uri     = "http://192.168.1.55:8000/api/login"
     Method  = "POST"  
     Body    = $body
     Headers = @{
@@ -21,7 +21,9 @@ foreach ($object in $json.PSObject.Properties) {
     Write-Host "Object name: $($object.Name)"
     $objectproperties = Get-Member -InputObject $object.Value -MemberType NoteProperty
     foreach($property in $objectproperties) {
-    Write-Host "Property name: $($property.Name)"
-    Write-Host "Property value: $($object.Value.($property.Name))"
+        if($property.Name -eq 'token'){
+            Write-Host "Property value: $($object.Value.($property.Name))"
+        }
+   
     }
 }

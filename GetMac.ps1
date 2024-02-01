@@ -5,14 +5,15 @@ function Set-ComputerName {
         [String]$userName
     )
     if ($env:COMPUTERNAME -ne $pcName) {
-        Rename-Computer -NewName $pcName
+        Write-Host "Set pcname"
+        # Rename-Computer -NewName $pcName
     }
     else {
         Write-Host "Current computer name is: $pcName"
     }
     if ($env:USERNAME -ne $userName) {
-        #Write-Host $env:USERNAME
-        Rename-LocalUser -Name $Env:UserName -NewName $userName
+        Write-Host "Set username"
+        # Rename-LocalUser -Name $Env:UserName -NewName $userName
     }
     else {
         Write-Host "Current user name is: $userName"
@@ -25,7 +26,7 @@ $LocalMacAddress = (Get-NetAdapter -Name "Ether*" | Select-Object MacAddress).Ma
 Write-Host 'Local mac address: ' $LocalMacAddress
 
 #So sanh vs CSDL 
-$computer = Invoke-RestMethod -Uri "http://192.168.1.7:8000/api/computer/search" -Method Post -Headers @{
+$computer = Invoke-RestMethod -Uri "http://192.168.1.55:8000/api/computer/search" -Method Post -Headers @{
     Accept = "application/json"
 } -Body @{
     mac_address = "$LocalMacAddress";
@@ -70,7 +71,7 @@ if (!$computer.mac_address) {
 
     # Send a POST request including bearer authentication.
     $Params = @{
-        Uri     = "http://192.168.1.7:8000/api/computer/create"
+        Uri     = "http://192.168.1.55:8000/api/computer/create"
         Method  = "POST"  
         Body    = $body
         #Form = $Body
